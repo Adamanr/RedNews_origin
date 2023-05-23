@@ -19,9 +19,9 @@
         <div class="bg-white shadow rounded-lg p-5">
             <div class="flex flex-col gap-1 text-center items-center">
                 <% if @user.verified %>
-                    <img class="h-32 w-32 bg-[#5E17F4] p-2 rounded-full shadow mb-4" src="<%= url_for(@user.avatar.variant(resize_to_fill: [1000, 1000])) %>" alt="">
+                    <img class="h-32 w-32 bg-[#5E17F4] p-2 rounded-full shadow mb-4" src="<%= url_for(@user.avatar) %>" alt="">
                 <% else %>
-                    <img class="h-32 w-32 bg-white p-2 rounded-full shadow mb-4" src="<%= url_for(@user.avatar.variant(resize_to_fill: [1000, 1000])) %>" alt="">
+                    <img class="h-32 w-32 bg-white p-2 rounded-full shadow mb-4" src="<%= url_for(@user.avatar) %>" alt="">
                 <% end %>
                 <p class="font-semibold"><%= @user.login %></p>
                 <div class="text-sm leading-normal text-gray-400 flex justify-center items-center">

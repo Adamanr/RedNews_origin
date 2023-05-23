@@ -20,7 +20,7 @@ default: &default
   username: #
   password: #
   host: #
-  port: 5432
+  port: #
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:

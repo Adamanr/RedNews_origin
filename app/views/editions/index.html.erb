@@ -1,9 +1,23 @@
-<div aria-label="group of cards" class="focus:outline-none py-8 max-w-6xl mx-auto">
+<style>
+    .editionsList::-webkit-scrollbar{
+        width:0;
+    }
+</style>
+<div aria-label="group of cards" class="focus:outline-none py-2 max-w-6xl mx-auto">
+
+    <div>
+        <h4 class="text-3xl font-bold pb-4">Издания</h4>
+
+        <p>
+            Подписка на издания – это не только удобный способ получать информацию, но и возможность доверять ей. Ведь качественные издания стремятся предоставлять своим читателям только достоверную и проверенную информацию. Более того, многие издания имеют свои принципы и стандарты, которым следуют при составлении материалов.
+        </p>
+    </div>
+
     <a href="/editions/new">
-        <button class="p-2 border-2 border-purple-400 text-purple-400 rounded-lg sn:m-2">Подать заявку на подтверждение</button>
+        <button class="p-2 border-2 border-purple-400 text-purple-400 rounded-lg md:mt-2 md:mb-3 md:m-0 sn:m-2">Подать заявку на подтверждение</button>
     </a>
 
-    <div class="lg:flex items-center p-2 justify-center w-full">
+    <div class="editionsList lg:flex items-center overflow-y-scroll h-full relative p-2  w-full">
         <% @editions.each do |e|%>
             <div tabindex="0" aria-label="card 1" class="focus:outline-none lg:w-4/12 lg:mr-7 lg:mb-0 mb-7 md:h-56 p-6 shadow rounded">
                 <div class="flex items-center pb-6">
@@ -20,9 +34,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="px-2">
+                <div class="px-2 ">
                     <p tabindex="0" class="focus:outline-none text-sm leading-5 pb-4 text-gray-600"><%= e.desc %></p>
-                    <div tabindex="0" class="focus:outline-none flex">
+                    <div tabindex="0" class="focus:outline-none flex absolute bottom-10">
                         <div class="py-2 px-4 text-xs leading-3 text-indigo-700 rounded-full bg-indigo-100">#<%= e.name %></div>
                         <div class="py-2 px-4 ml-3 text-xs leading-3 text-indigo-700 rounded-full bg-indigo-100">#<%= e.category %></div>
                     </div>

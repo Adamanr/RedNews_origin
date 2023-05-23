@@ -36,6 +36,9 @@ Rails.application.routes.draw do
 
   get '/editions', to: 'editions#index'
   get '/editions', to: 'editions#new'
+  get '/editions/:id/users', to: 'editions#user_list'
+  get '/editions/sub/:edition_id/:user_id', to: 'editions#subscribe'
+  get '/editions/unsub/:edition_id/:user_id', to: 'editions#unsubscribe'
 
   get '/article', to: 'articles#index'
   get '/articles/tag/:tag', to: 'articles#tag'

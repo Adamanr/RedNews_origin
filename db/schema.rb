@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_21_111032) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_22_204504) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -42,15 +42,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_21_111032) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "article_bookmarks", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "article_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["article_id"], name: "index_article_bookmarks_on_article_id"
-    t.index ["user_id"], name: "index_article_bookmarks_on_user_id"
-  end
-
   create_table "article_likes", force: :cascade do |t|
     t.bigint "article_id", null: false
     t.bigint "user_id", null: false
@@ -80,6 +71,31 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_21_111032) do
     t.index ["user_id"], name: "index_articles_comments_on_user_id"
   end
 
+  create_table "edition_roles", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "edition_subscriptions", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "edition_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["edition_id"], name: "index_edition_subscriptions_on_edition_id"
+    t.index ["user_id"], name: "index_edition_subscriptions_on_user_id"
+  end
+
+  create_table "edition_users", force: :cascade do |t|
+    t.bigint "edition_id", null: false
+    t.bigint "user_id", null: false
+    t.integer "role_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["edition_id"], name: "index_edition_users_on_edition_id"
+    t.index ["user_id"], name: "index_edition_users_on_user_id"
+  end
+
   create_table "editions", force: :cascade do |t|
     t.string "name"
     t.string "desc"
@@ -92,15 +108,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_21_111032) do
     t.datetime "updated_at", null: false
     t.string "color"
     t.index ["user_id"], name: "index_editions_on_user_id"
-  end
-
-  create_table "event_bookmarks", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "event_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["event_id"], name: "index_event_bookmarks_on_event_id"
-    t.index ["user_id"], name: "index_event_bookmarks_on_user_id"
   end
 
   create_table "event_comments", force: :cascade do |t|
@@ -123,6 +130,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_21_111032) do
     t.string "category"
     t.integer "likes_count"
     t.string "city"
+    t.bigint "edition_id", null: false
+    t.index ["edition_id"], name: "index_events_on_edition_id"
     t.index ["user_id"], name: "index_events_on_user_id"
   end
 
@@ -150,17 +159,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_21_111032) do
     t.index ["impressionable_type", "impressionable_id", "session_hash"], name: "poly_session_index"
     t.index ["impressionable_type", "message", "impressionable_id"], name: "impressionable_type_message_index"
     t.index ["user_id"], name: "index_impressions_on_user_id"
-  end
-
-  create_table "likes", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "article_id"
-    t.bigint "event_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["article_id"], name: "index_likes_on_article_id"
-    t.index ["event_id"], name: "index_likes_on_event_id"
-    t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
   create_table "subscriptions", force: :cascade do |t|
@@ -201,27 +199,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_21_111032) do
     t.index ["name"], name: "index_tags_on_name", unique: true
   end
 
-  create_table "updates", force: :cascade do |t|
-    t.string "title"
-    t.string "body"
-    t.bigint "user_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "impressions_count"
-    t.string "category"
-    t.index ["user_id"], name: "index_updates_on_user_id"
-  end
-
-  create_table "updates_comments", force: :cascade do |t|
-    t.text "content"
-    t.bigint "user_id", null: false
-    t.bigint "article_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["article_id"], name: "index_updates_comments_on_article_id"
-    t.index ["user_id"], name: "index_updates_comments_on_user_id"
-  end
-
   create_table "user_roles", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -249,25 +226,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_21_111032) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "article_bookmarks", "articles"
-  add_foreign_key "article_bookmarks", "users"
   add_foreign_key "article_likes", "articles"
   add_foreign_key "article_likes", "users"
   add_foreign_key "articles", "users"
   add_foreign_key "articles_comments", "articles"
   add_foreign_key "articles_comments", "users"
+  add_foreign_key "edition_subscriptions", "editions"
+  add_foreign_key "edition_subscriptions", "users"
+  add_foreign_key "edition_users", "editions"
+  add_foreign_key "edition_users", "users"
   add_foreign_key "editions", "users"
-  add_foreign_key "event_bookmarks", "events"
-  add_foreign_key "event_bookmarks", "users"
   add_foreign_key "event_comments", "events"
   add_foreign_key "event_comments", "users"
+  add_foreign_key "events", "editions"
   add_foreign_key "events", "users"
-  add_foreign_key "likes", "articles"
-  add_foreign_key "likes", "events"
-  add_foreign_key "likes", "users"
   add_foreign_key "taggings", "tags"
-  add_foreign_key "updates", "users"
-  add_foreign_key "updates_comments", "articles"
-  add_foreign_key "updates_comments", "users"
   add_foreign_key "users", "user_roles"
 end

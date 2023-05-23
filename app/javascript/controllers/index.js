@@ -10,3 +10,5 @@ application.register("search", search_controller)
 import admin_controller from "./admin_controller"
 application.register("admin", admin_controller)
 
+import subscribe_controller from "./subscribe_contoller"
+application.register("subscribe", subscribe_controller)

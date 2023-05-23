@@ -9,6 +9,7 @@ class EventsController < ApplicationController
     @all_events = Event.all
     yesterday = Date.yesterday
     @events = Event.where.not(id: @popular_news.pluck(:id))
+    @user_edition = Edition.where(user_id: current_user.id)
     @popular_news_yesterday = Event.where("DATE(created_at) = ?", yesterday).order(impressions_count: :desc).limit(4)
   end
 
@@ -23,6 +24,7 @@ class EventsController < ApplicationController
 
   # GET /events/1 or /events/1.json
   def show
+
     @user = User.find(@event.user_id)
     impressionist(@event)
   end
@@ -47,6 +49,7 @@ class EventsController < ApplicationController
 
   # GET /events/new
   def new
+    @editions_list = Edition.where(user_id: current_user.id, verified: true)
     @event = Event.new
   end
 
@@ -58,6 +61,7 @@ class EventsController < ApplicationController
   def create
     @event = Event.new(event_params)
     @event.user_id = current_user.id
+
     @event.tag_list = params[:event][:tag_list] # Получаем теги из параметров формы
 
     respond_to do |format|
@@ -117,6 +121,6 @@ class EventsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def event_params
-      params.require(:event).permit(:title, :body, :category, :tag_list, :header, :city)
+      params.require(:event).permit(:title, :body, :category, :tag_list, :header, :city, :edition_id)
     end
 end

@@ -89,12 +89,16 @@
 					<p class="text-gray-600 text-sm mt-1 font-bold">Образование</p>
 				</a>
 			</div>
+
             <div class="mb-3">
     			<h4 class="text-3xl pt-4 font-bold pb-4">Функционал</h4>
                 <div class="md:flex sn:w-full md:gap-2">
-                    <a href="/articles/new" class="text-xl text-center sn:w-full md:w-1/2 border-2 border-emerald-500 p-2 font-bold text-emerald-500 shadow mb-2 rounded-lg">
-                        Написать статью
-                    </a>
+                    <% if !@user_edition.empty? %>
+                        <a href="/events/new" class="text-xl text-center sn:w-full md:w-1/2 border-2 border-emerald-500 p-2 font-bold text-emerald-500 shadow mb-2 rounded-lg">
+                            Написать статью
+                        </a>
+                    <% end %>
+
 
                     <%# <button class="text-xl border-2 border-blue-500 p-2 font-bold text-blue-500 shadow mb-2 rounded-lg ">
                         Перейти в поиск
@@ -137,7 +141,7 @@
             <% end %>
 
 
-            <% if !@all_events.nil?%>
+            <% if @all_events[0...4].empty?%>
                 <div class="mb-3">
                     <h1 class="text-3xl font-bold">Вчера</h1>
                     <p class="text-sm text-gray-500 uppercase font-bold"><%= l(Date.yesterday, format: :short)%></p>

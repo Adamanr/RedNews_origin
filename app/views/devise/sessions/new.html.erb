@@ -14,6 +14,9 @@
                 </p>
 
                 <%= form_for(resource, as: resource_name, class:"grid grid-cols-1 gap-6 mt-8 md:grid-cols-2", url: session_path(resource_name)) do |f| %>
+                    <% resource.errors.full_messages.each do |msg| %>
+                        <div><%= msg %></div>
+                    <% end %>
                   <div class="mt-4">
                       <label class="block mb-2 text-sm text-gray-600 dark:text-gray-200">Почта</label>
                       <%= f.email_field :email, autofocus: true,placeholder:"andrey@example.com", autocomplete: "email", class:"block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" %>

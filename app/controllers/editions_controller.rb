@@ -6,8 +6,37 @@ class EditionsController < ApplicationController
     @editions = Edition.where(verified:true)
   end
 
+  def subscribe
+    @e = EditionSubscription.new(user_id: params[:user_id], edition_id: params[:edition_id])
+    if @e.save
+      if @e.user.id != @e.edition.user_id
+        @e_role = EditionUser.new(user_id: params[:user_id], edition_id: params[:edition_id],role_id:4)
+        @e_role.save
+      end
+      render json: @e
+    else
+      render json: @e, status: 500
+    end
+  end
+
+  def unsubscribe
+    @e = EditionSubscription.find_by(user_id: params[:user_id], edition_id: params[:edition_id])
+    @e.delete
+    if @e.save
+      render json: @e
+    else
+      render json: @e, status: 500
+    end
+  end
+
+  def user_list
+    @users_list = EditionUser.where(edition_id: params[:id])
+  end
+
   # GET /editions/1 or /editions/1.json
   def show
+    @edition_news_count = Event.where(edition_id: params[:id]).count
+    @subscribe = EditionSubscription.find_by(user_id: current_user.id, edition_id:params[:id])
   end
 
   # GET /editions/new

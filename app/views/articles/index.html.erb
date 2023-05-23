@@ -3,9 +3,7 @@
     width:0;
   }
 </style>
-<div data-action="admins">
-<p>Hello</p>
-</div>
+
 <div class="mainEvent max-w-screen-xl h-full overflow-y-scroll mx-auto">
     <div class="mx-auto">
       <details class="open:bg-white dark:open:bg-slate-900 open:ring-1 open:ring-black/5 p-4 dark:open:ring-white/10 open:shadow-lg  rounded-lg">
@@ -21,56 +19,58 @@
     </div>
     <main class="mt-5">
       <div class="block md:flex md:space-x-2 px-2 lg:p-0">
-        <a
-          class="mb-4 md:mb-0 w-full md:w-2/3 relative rounded inline-block"
-          style="height: 24em;"
-          href="/articles/<%= @articles[0].id %>"
-        >
-          <div class="absolute left-0 bottom-0 w-full h-full z-10"
-            style="background-image: linear-gradient(180deg,transparent,rgba(0,0,0,.7));"></div>
-          <img src="<%= url_for(@articles[0].header) %>" class="absolute opacity-75 left-0 top-0 w-full h-full rounded z-0 object-cover" />
-          <div class="p-4 absolute bottom-0 left-0 z-20">
-            <% @articles[0].tag_list.each do |tag|%>
-              <span class="px-4 py-1 bg-black text-gray-200 inline-flex items-center justify-center mb-2"><%= tag %></span>
-            <%end%>
-            <h2 class="text-4xl font-semibold text-gray-100 leading-tight">
-              <%= @articles[0].title %>
-            </h2>
-            <div class="flex mt-3">
-              <img src="<%= url_for(@articles[0].user.avatar) %>"
-                class="h-10 w-10 rounded-full mr-2 object-cover" />
-              <div>
-                <p class="font-semibold text-gray-200 text-sm"> <%= @articles[0].user.login %> </p>
-                <p class="font-semibold text-gray-400 text-xs"> <%= l( @articles[0].created_at, format: :short)%> </p>
+          <% if !@articles.empty? %>
+          <a
+            class="mb-4 md:mb-0 w-full md:w-2/3 relative rounded inline-block"
+            style="height: 24em;"
+            href="/articles/<%= @articles[0].id %>"
+          >
+            <div class="absolute left-0 bottom-0 w-full h-full z-10"
+              style="background-image: linear-gradient(180deg,transparent,rgba(0,0,0,.7));"></div>
+            <img src="<%= url_for(@articles[0].header) %>" class="absolute opacity-75 left-0 top-0 w-full h-full rounded z-0 object-cover" />
+            <div class="p-4 absolute bottom-0 left-0 z-20">
+              <% @articles[0].tag_list.each do |tag|%>
+                <span class="px-4 py-1 bg-black text-gray-200 inline-flex items-center justify-center mb-2"><%= tag %></span>
+              <%end%>
+              <h2 class="text-4xl font-semibold text-gray-100 leading-tight">
+                <%= @articles[0].title %>
+              </h2>
+              <div class="flex mt-3">
+                <img src="<%= url_for(@articles[0].user.avatar) %>"
+                  class="h-10 w-10 rounded-full mr-2 object-cover" />
+                <div>
+                  <p class="font-semibold text-gray-200 text-sm"> <%= @articles[0].user.login %> </p>
+                  <p class="font-semibold text-gray-400 text-xs"> <%= l( @articles[0].created_at, format: :short)%> </p>
+                </div>
+              </div>
+            </div>
+          </a>
+
+          <a class="w-full md:w-1/3 relative rounded"
+            style="height: 24em;"
+            href="./articles/<%= @articles[1].id %>"
+          >
+            <div class="absolute left-0 top-0 w-full h-full z-10"
+              style="background-image: linear-gradient(180deg,transparent,rgba(0,0,0,.7));"></div>
+            <img src="<%= url_for(@articles[1].header) %>" class="absolute left-0 top-0 w-full h-full rounded opacity-75 z-0 object-cover" />
+            <div class="p-4 absolute bottom-0 left-0 z-20">
+              <% @articles[1].tag_list.each do |tag|%>
+                <span class="px-4 py-1 bg-black text-gray-200 inline-flex items-center justify-center mb-2"><%= tag %></span>
+              <%end%>
+              <h2 class="text-3xl font-semibold text-gray-100 leading-tight"> <%= @articles[1].title %></h2>
+              <div class="flex mt-3">
+                <img
+                  src="<%= url_for(@articles[1].user.avatar) %>"
+                  class="h-10 w-10 rounded-full mr-2 object-cover" />
+                <div>
+                  <p class="font-semibold text-gray-200 text-sm"> <%= @articles[1].user.login %> </p>
+                  <p class="font-semibold text-gray-400 text-xs"> <%= l( @articles[1].created_at, format: :short)%> </p>
+                </div>
               </div>
             </div>
           </div>
         </a>
-
-        <a class="w-full md:w-1/3 relative rounded"
-          style="height: 24em;"
-          href="./articles/<%= @articles[1].id %>"
-        >
-          <div class="absolute left-0 top-0 w-full h-full z-10"
-            style="background-image: linear-gradient(180deg,transparent,rgba(0,0,0,.7));"></div>
-          <img src="<%= url_for(@articles[1].header) %>" class="absolute left-0 top-0 w-full h-full rounded opacity-75 z-0 object-cover" />
-          <div class="p-4 absolute bottom-0 left-0 z-20">
-            <% @articles[1].tag_list.each do |tag|%>
-              <span class="px-4 py-1 bg-black text-gray-200 inline-flex items-center justify-center mb-2"><%= tag %></span>
-            <%end%>
-            <h2 class="text-3xl font-semibold text-gray-100 leading-tight"> <%= @articles[1].title %></h2>
-            <div class="flex mt-3">
-              <img
-                src="<%= url_for(@articles[1].user.avatar) %>"
-                class="h-10 w-10 rounded-full mr-2 object-cover" />
-              <div>
-                <p class="font-semibold text-gray-200 text-sm"> <%= @articles[1].user.login %> </p>
-                <p class="font-semibold text-gray-400 text-xs"> <%= l( @articles[1].created_at, format: :short)%> </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </a>
+      <% end %>
       <div class="block lg:flex lg:space-x-2 px-2 lg:p-0 mt-10 mb-10">
 
         <div>
@@ -129,7 +129,7 @@
         </div>
 
 
-        <!-- right sidebar -->
+        <% if !@popular_tags.empty? %>
         <div class="w-1/2 px-3">
           <!-- topics -->
           <div class="mb-4">
@@ -164,11 +164,12 @@
                   <span class="inline-block h-4 w-4 bg-blue-300 mr-3"></span>
                   <%= @popular_tags[3].name %>
                   <span class="text-gray-500 ml-auto">Статей: <%= @popular_tags[0].count %></span>
-                  <i class='text-gray-500 bx bx-right-arrow-alt ml-1'></i>
-                </a>
-              </li>
-            </ul>
-          </div>
+                <i class='text-gray-500 bx bx-right-arrow-alt ml-1'></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+
 
           <!-- divider -->
           <div class="border border-dotted"></div>
@@ -190,7 +191,7 @@
           <div class="border border-dotted"></div>
 
         </div>
-
+     <% end %>
       </div>
     </main>
     <!-- main ends here -->
@@ -200,21 +201,21 @@
       <div class="flex">
 
         <div class="w-full md:w-1/3 lg:w-1/4">
-          <h6 class="font-semibold text-gray-700 mb-4">Company</h6>
+          <h6 class="font-semibold text-gray-700 mb-4">О компании</h6>
           <ul>
-            <li> <a href="" class="block text-gray-600 py-2">Team</a> </li>
-            <li> <a href="" class="block text-gray-600 py-2">About us</a> </li>
-            <li> <a href="" class="block text-gray-600 py-2">Press</a> </li>
+            <li> <a href="" class="block text-gray-600 py-2">Главная</a> </li>
+            <li> <a href="" class="block text-gray-600 py-2">О продуктах</a> </li>
+            <li> <a href="" class="block text-gray-600 py-2">Обновления</a> </li>
           </ul>
         </div>
 
         <div class="w-full md:w-1/3 lg:w-1/4">
-          <h6 class="font-semibold text-gray-700 mb-4">Content</h6>
+          <h6 class="font-semibold text-gray-700 mb-4">Контент</h6>
           <ul>
-            <li> <a href="" class="block text-gray-600 py-2">Blog</a> </li>
-            <li> <a href="" class="block text-gray-600 py-2">Privacy Policy</a> </li>
-            <li> <a href="" class="block text-gray-600 py-2">Terms & Conditions</a> </li>
-            <li> <a href="" class="block text-gray-600 py-2">Documentation</a> </li>
+            <li> <a href="" class="block text-gray-600 py-2">Новости</a> </li>
+            <li> <a href="" class="block text-gray-600 py-2">Статьи</a> </li>
+            <li> <a href="" class="block text-gray-600 py-2">Издательства</a> </li>
+            <li> <a href="" class="block text-gray-600 py-2">Пользователи</a> </li>
           </ul>
         </div>
 

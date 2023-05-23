@@ -18,26 +18,6 @@ class ArticlesController < ApplicationController
     end
   end
 
-  def bookmark
-    @article = Article.find(params[:id])
-    current_user.articles << @article
-    redirect_to @article, notice: "Статья добавлена в закладки"
-  end
-
-  def unbookmark
-    @article = Article.find(params[:id])
-    current_user.articles.delete(@article)
-    redirect_to @article, notice: "Статья удалена из закладок"
-  end
-
-  def like
-    @article = Article.find(params[:id])
-    @article_like = current_user.article_likes.find_by(user_id: @article.id)
-    respond_to do |format|
-      format.html { redirect_to @article }
-      format.json { render json: { likes_count: @article.article_likes.count } }
-    end
-  end
   # GET /articles/1 or /articles/1.json
   def show
     @user = User.find(@article.user_id)
